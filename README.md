@@ -1,5 +1,5 @@
 # OSUing (In Progress)
-An iOS application to track your progress towards graduation for students at Ohio State!
+An iOS application to track progress towards graduation for students at Ohio State!
 
 ## Tools
 - Swift
