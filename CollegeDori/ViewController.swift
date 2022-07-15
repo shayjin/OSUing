@@ -57,8 +57,13 @@ class ViewController: UIViewController {
     var totalSchoolYearSeconds = 0
     var currentSchoolYearSeconds = 0
     var milli: Float = 0
+
+    var stu: Student?
+    var offset: Int = 0
+    var index: Int = 0
     
-    
+    @IBOutlet weak var scrollViewView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     fileprivate func showTime()  {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
@@ -67,7 +72,36 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profilePicture.image = me?.profilePicture
+        
+        for student in test {
+            let button = UIButton()
+            button.setTitle(student.name + " - " + student.grade, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.backgroundColor = UIColor(red: 250/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
+            button.frame = CGRect(x: 0, y: offset, width: Int(UIScreen.main.bounds.width), height: 30)
+            button.tag = index
+            button.addTarget(self,
+                             action: #selector(buttonAction),
+                             for: .touchUpInside)
+            
+            button.layer.borderWidth = 0.3
+            scrollViewView.addSubview(button)
+  
+            offset += 30
+            index += 1
+        }
+        
         calculate()
+    }
+    
+    @objc func buttonAction(sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "main") as! ViewController
+        vc.modalPresentationStyle = .fullScreen
+        vc.me = test[sender.tag]
+        vc.test = test
+        vc.test2 = test2
+        present(vc, animated: false, completion: nil)
     }
     
     func calculate() {
