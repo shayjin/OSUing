@@ -72,12 +72,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profilePicture.image = me?.profilePicture
-        
+        index = 0
         for student in test {
             let button = UIButton()
-            button.setTitle(student.name + " - " + student.grade, for: .normal)
+            button.setTitle(student.grade + " " + student.name, for: .normal)
             button.setTitleColor(.black, for: .normal)
-            button.backgroundColor = UIColor(red: 250/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
+            
+            if student.myself {
+                    button.backgroundColor = UIColor(red: 250/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+                } else {
+                    button.backgroundColor = UIColor(red: 250/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+                }
+            
+            
             button.frame = CGRect(x: 0, y: offset, width: Int(UIScreen.main.bounds.width), height: 30)
             button.tag = index
             button.addTarget(self,
@@ -246,6 +253,7 @@ class ViewController: UIViewController {
         vc.test = test
         present(vc, animated: true, completion: nil)
     }
+    
     @IBAction func addPressed(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "register") as! RegisterViewController
@@ -257,5 +265,20 @@ class ViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
+    @IBAction func deletePressed(_ sender: UIButton) {
+        if let index = test.index(where: {$0 === me!}) {
+            
+            print(index)
+            test.remove(at: index)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "main") as! ViewController
+            vc.modalPresentationStyle = .fullScreen
+            vc.me = test[index-1]
+            vc.test = test
+            vc.test2 = test2
+            present(vc, animated: false, completion: nil)
+          
+        }
+    }
 }
 

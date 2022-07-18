@@ -42,8 +42,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             pickerData.append(semester.name)
         }
         
-        print(pickerData)
-        
         if x != nil {
             let startIndex = pickerData.firstIndex(of: x!)
             self.startOptions.selectRow(startIndex!, inComponent: 0, animated: false)
@@ -79,18 +77,30 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let vc = storyboard.instantiateViewController(withIdentifier: "main") as! ViewController
         vc.modalPresentationStyle = .fullScreen
         
-
         if let index = test.index(where: {$0 === me!}) {
-            test.remove(at: index)
+            if (edit) {
+                me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                test[index] = me!
+                vc.me = me!
+                vc.imageChosen = image
+                
+                vc.test = test
+                present(vc, animated: true, completion: nil)
+            } else {
+                me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                if test.isEmpty {
+                    me?.myself = true
+                }
+                
+                test.append (me!)
+                vc.me = me!
+                vc.imageChosen = image
+                
+                vc.test = test
+                present(vc, animated: true, completion: nil)
+            }
         }
         
-        me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
-        test.append(me!)
-        vc.me = me!
-        vc.imageChosen = image
-        
-        vc.test = test
-        present(vc, animated: true, completion: nil)
     }
     
     // Number of columns of data
@@ -139,7 +149,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
         var index = 0
         for semester in pickerData {
-            print(semester)
             if semester == dataPicked {
                 var x = Date2(year: data.semesters[index].year, month: data.semesters[index].endMonth, day: data.semesters[index].endDay)
                 return x

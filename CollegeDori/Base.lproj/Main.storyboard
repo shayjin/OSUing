@@ -13,7 +13,7 @@
             <objects>
                 <viewController storyboardIdentifier="main" title="Profile" id="BYZ-38-t0r" customClass="ViewController" customModule="CollegeDori" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="754" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fed-hq-UHa">
@@ -178,12 +178,12 @@
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99038950749999999" green="0.63498658519999995" blue="0.2259107303" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="View My Friends">
+                                <buttonConfiguration key="configuration" style="plain" title="Add More Friends!">
                                     <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="15"/>
                                     <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="showListPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xXX-lD-LwR"/>
+                                    <action selector="addPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Eyo-7X-cw5"/>
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HSc-GB-U73">
@@ -195,11 +195,11 @@
                                 </constraints>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrU-XP-TT8">
-                                <rect key="frame" x="10" y="49" width="50" height="31"/>
+                                <rect key="frame" x="10" y="49" width="66" height="31"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Add"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Delete"/>
                                 <connections>
-                                    <action selector="addPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TmM-rM-Ndo"/>
+                                    <action selector="deletePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nLU-8j-bgY"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vL7-5I-dZH">
@@ -262,12 +262,23 @@
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VU3-Uy-so0">
-                                <rect key="frame" x="0.0" y="611.66666666666663" width="390" height="388.33333333333337"/>
+                                <rect key="frame" x="0.0" y="611.66666666666663" width="390" height="488.33333333333337"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9By-Qs-Me8">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="230"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="r9X-Mz-JIR">
+                                                <rect key="frame" x="150" y="140" width="90" height="90"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="KJr-Mn-usw"/>
+                                                    <constraint firstAttribute="height" constant="90" id="nfz-ol-W2s"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="r9X-Mz-JIR" firstAttribute="centerX" secondItem="9By-Qs-Me8" secondAttribute="centerX" id="8CD-lN-iKv"/>
+                                            <constraint firstAttribute="bottom" secondItem="r9X-Mz-JIR" secondAttribute="bottom" id="DJ4-UK-HR5"/>
                                             <constraint firstAttribute="height" constant="230" id="blP-vh-S4D"/>
                                         </constraints>
                                     </view>
@@ -361,7 +372,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="dd" selectedImage="person" catalog="system" id="pkV-Sy-Nvz"/>
                     <navigationItem key="navigationItem" id="eKr-VI-5Ck"/>
-                    <size key="freeformSize" width="390" height="1000"/>
+                    <size key="freeformSize" width="390" height="1100"/>
                     <connections>
                         <outlet property="add" destination="UrU-XP-TT8" id="Pe2-zQ-RQY"/>
                         <outlet property="daysUntilEndOfSchoolYear" destination="zsW-Ee-dMw" id="CSY-GV-EAl"/>

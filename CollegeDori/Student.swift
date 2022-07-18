@@ -19,6 +19,7 @@ class Student {
     var gapSemesters: Int
     var grade: String
     var profilePicture: UIImage
+    var myself: Bool
     
     var semesters: [String] = ["Spring 2019", "Summer 2019", "Autumn 2019", "Spring 2020", "Summer 2020", "Autumn 2020", "Spring 2021", "Summer 2021", "Autumn 2021", "Spring 2022", "Summer 2022", "Autumn 2022", "Spring 2023", "Summer 2023", "Autumn 2023", "Spring 2024", "Summer 2024", "Autumn 2024", "Spring 2025", "Summer 2025", "Autumn 2025"]
     
@@ -42,6 +43,7 @@ class Student {
         self.attendingSemesters = Array(semesters[startIndex...endIndex])
         self.gapSemesters = 0
         self.grade = ""
+        self.myself = false
         self.grade = self.calculateGrade()
     }
     
@@ -55,6 +57,7 @@ class Student {
         self.attendingSemesters = []
         self.gapSemesters = 0
         self.grade = ""
+        self.myself = false
     }
     
     func calculateGrade() -> String{
