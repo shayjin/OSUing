@@ -65,14 +65,31 @@ class ViewController: UIViewController {
     @IBOutlet weak var scrollViewView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var progressView: UIView!
+    @IBOutlet weak var secondProgressView: UIView!
+    
+    
     fileprivate func showTime()  {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self.view.frame.height, self.view.frame.width)
-        profilePicture.image = me?.profilePicture
+        
+        self.progressView.layer.cornerRadius = 30
+        self.grade.layer.cornerRadius = 10
+        self.semesterLabel.layer.cornerRadius = 3
+        self.schoolYearLabel.layer.cornerRadius = 3
+        self.secondProgressView.layer.cornerRadius = 15
+        
+        self.progressView.layer.masksToBounds = true
+        self.grade.layer.masksToBounds = true
+        self.semesterLabel.layer.masksToBounds = true
+        self.schoolYearLabel.layer.masksToBounds = true
+        self.secondProgressView.layer.masksToBounds = true
+        
+        
+        self.profilePicture.image = me?.profilePicture
         index = 0
         for student in test {
             let button = UIButton()
