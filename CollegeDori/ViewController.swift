@@ -68,6 +68,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var secondProgressView: UIView!
     
+    @IBOutlet weak var backView: UIView!
     
     fileprivate func showTime()  {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
@@ -81,13 +82,14 @@ class ViewController: UIViewController {
         self.semesterLabel.layer.cornerRadius = 3
         self.schoolYearLabel.layer.cornerRadius = 3
         self.secondProgressView.layer.cornerRadius = 15
+        self.backView.layer.cornerRadius = 25
         
         self.progressView.layer.masksToBounds = true
         self.grade.layer.masksToBounds = true
         self.semesterLabel.layer.masksToBounds = true
         self.schoolYearLabel.layer.masksToBounds = true
         self.secondProgressView.layer.masksToBounds = true
-        
+        self.backView.layer.masksToBounds = true
         
         self.profilePicture.image = me?.profilePicture
         index = 0
