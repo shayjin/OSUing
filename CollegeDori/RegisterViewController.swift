@@ -77,15 +77,19 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let vc = storyboard.instantiateViewController(withIdentifier: "main") as! ViewController
         vc.modalPresentationStyle = .fullScreen
         
-        if let index = test.index(where: {$0 === me!}) {
+        
             if (edit) {
-                me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
-                test[index] = me!
-                vc.me = me!
-                vc.imageChosen = image
-                
-                vc.test = test
-                present(vc, animated: true, completion: nil)
+                if let index = test.index(where: {$0 === me!}) {
+                    var wasMySelf = test[index].myself
+                    me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                    me?.myself = wasMySelf
+                    test[index] = me!
+                    vc.me = me!
+                    vc.imageChosen = image
+                    
+                    vc.test = test
+                    present(vc, animated: true, completion: nil)
+                }
             } else {
                 me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
                 if test.isEmpty {
@@ -99,7 +103,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 vc.test = test
                 present(vc, animated: true, completion: nil)
             }
-        }
+        
         
     }
     
@@ -132,7 +136,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func convertToStartDate(dataPicked: String) -> Date2 {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        
+    
         var index = 0
         for semester in pickerData {
             if semester == dataPicked {
@@ -160,3 +164,4 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
 }
+

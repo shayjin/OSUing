@@ -71,6 +71,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(self.view.frame.height, self.view.frame.width)
         profilePicture.image = me?.profilePicture
         index = 0
         for student in test {
@@ -96,6 +97,14 @@ class ViewController: UIViewController {
   
             offset += 30
             index += 1
+        }
+        
+        if me?.myself == true {
+            self.add.isHidden = true
+        }
+        
+        if self.view.frame.height < 600 {
+            self.showLIst.isHidden = true
         }
         
         calculate()
