@@ -77,12 +77,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.progressView.layer.cornerRadius = 30
-        self.grade.layer.cornerRadius = 10
-        self.semesterLabel.layer.cornerRadius = 3
-        self.schoolYearLabel.layer.cornerRadius = 3
-        self.secondProgressView.layer.cornerRadius = 15
-        self.backView.layer.cornerRadius = 25
+        self.progressView.layer.cornerRadius = 5
+        self.grade.layer.cornerRadius = 5
+        self.semesterLabel.layer.cornerRadius = 5
+        self.schoolYearLabel.layer.cornerRadius = 5
+        self.secondProgressView.layer.cornerRadius = 5
+        self.backView.layer.cornerRadius = 5
+        self.scrollViewView.layer.cornerRadius = 5
         
         self.progressView.layer.masksToBounds = true
         self.grade.layer.masksToBounds = true
@@ -90,6 +91,7 @@ class ViewController: UIViewController {
         self.schoolYearLabel.layer.masksToBounds = true
         self.secondProgressView.layer.masksToBounds = true
         self.backView.layer.masksToBounds = true
+        self.scrollViewView.layer.masksToBounds = true
         
         self.profilePicture.image = me?.profilePicture
         index = 0
@@ -101,11 +103,11 @@ class ViewController: UIViewController {
             if student.myself {
                     button.backgroundColor = UIColor(red: 250/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
                 } else {
-                    button.backgroundColor = UIColor(red: 250/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+                    button.backgroundColor = UIColor(red: 209/255.0, green: 209/255.0, blue: 213/255.0, alpha: 1)
                 }
             
             
-            button.frame = CGRect(x: 0, y: offset, width: Int(UIScreen.main.bounds.width), height: 30)
+            button.frame = CGRect(x: 0, y: offset, width: Int(self.scrollViewView.frame.width) - 10, height: 40)
             button.tag = index
             button.addTarget(self,
                              action: #selector(buttonAction),
@@ -114,7 +116,7 @@ class ViewController: UIViewController {
             button.layer.borderWidth = 0.3
             scrollViewView.addSubview(button)
   
-            offset += 30
+            offset += 40
             index += 1
         }
         
