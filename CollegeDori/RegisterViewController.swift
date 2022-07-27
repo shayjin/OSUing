@@ -9,6 +9,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var profilePicture: UIImageView!
     
     @IBOutlet weak var nameField: UITextField!
+    @IBOutlet var transferSemesterCompletedBefore: UITextField!
+    
     
     @IBOutlet weak var startOptions: UIPickerView!
     @IBOutlet weak var endOptions: UIPickerView!
@@ -22,6 +24,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var endDate: String?
     var me: Student?
     
+    var semestersBeforeTransfer: Int?
+    
     var image: UIImage? = UIImage(named: "profile")
     
     var test: [Student] = []
@@ -29,14 +33,20 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var edit: Bool = false
     
+    @IBOutlet var xxx: UIPickerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.startOptions.dataSource = self
         self.startOptions.delegate = self
         self.endOptions.dataSource = self
         self.endOptions.delegate = self
+        self.xxx.dataSource = self
+        self.xxx.delegate = self
+        
         var x = me?.startingDate?.semester.name
         var y = me?.endingDate?.semester.name
+        var z = me?.semestersCompletedBeforeTransfer
         
         nameField.text = me?.name
 
@@ -54,6 +64,9 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let endIndex = pickerData.firstIndex(of: y!)
 
             self.endOptions.selectRow(endIndex!, inComponent: 0, animated: false)
+            
+            // 여기 하셈
+            
             startDate = pickerData[startIndex!]
             endDate = pickerData[endIndex!]
         } else {
@@ -68,11 +81,13 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 self.isTransferStudent.isOn = true
                 self.startOptions.isHidden = true
                 self.transferStart.isHidden = false
+                self.transferSemesterCompletedBefore.isHidden = false
                 self.transferStart.date = me!.transferStartingDate
             } else {
                 self.isTransferStudent.isOn = false
                 self.startOptions.isHidden = false
                 self.transferStart.isHidden = true
+                self.transferSemesterCompletedBefore.isHidden = true
             }
         }
     }
@@ -80,9 +95,11 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if sender.isOn {
             self.startOptions.isHidden = true
             self.transferStart.isHidden = false
+            self.transferSemesterCompletedBefore.isHidden = false
         } else {
             self.startOptions.isHidden = false
             self.transferStart.isHidden = true
+            self.transferSemesterCompletedBefore.isHidden = true
         }
     }
     
@@ -104,15 +121,15 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "main") as! ViewController
         vc.modalPresentationStyle = .fullScreen
-        
+
         
             if (edit) {
                 if let index = test.index(where: {$0 === me!}) {
                     
                     var wasMySelf = test[index].myself
-                    
+                    var tt = self.transferSemesterCompletedBefore
                     if self.isTransferStudent.isOn {
-                        me = Student(name: nameField.text!, profilePicture: image!, startingDate: Date2(date: self.transferStart.date), transferStartingDate: self.transferStart.date, now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                        me = Student(name: nameField.text!, profilePicture: image!, startingDate: Date2(date: self.transferStart.date), transferStartingDate: self.transferStart.date, now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!), semestersCompletedBeforeTransfer: Int(self.transferSemesterCompletedBefore.text!)!)
                         
                     } else {
                         me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
@@ -127,7 +144,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 }
             } else {
                 if self.isTransferStudent.isOn {
-                    me = Student(name: nameField.text!, profilePicture: image!, startingDate: Date2(date: self.transferStart.date), transferStartingDate: self.transferStart.date, now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                    var tt = self.transferSemesterCompletedBefore
+                    me = Student(name: nameField.text!, profilePicture: image!, startingDate: Date2(date: self.transferStart.date), transferStartingDate: self.transferStart.date, now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!), semestersCompletedBeforeTransfer: Int(self.transferSemesterCompletedBefore.text!)!)
                 } else {
                     me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
                 }

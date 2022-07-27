@@ -22,6 +22,7 @@ class Student {
     var profilePicture: UIImage
     var myself: Bool
     var isTransfer: Bool
+    var semestersCompletedBeforeTransfer: Int
     
     var semesters: [String] = ["Spring 2019", "Summer 2019", "Autumn 2019", "Spring 2020", "Summer 2020", "Autumn 2020", "Spring 2021", "Summer 2021", "Autumn 2021", "Spring 2022", "Summer 2022", "Autumn 2022", "Spring 2023", "Summer 2023", "Autumn 2023", "Spring 2024", "Summer 2024", "Autumn 2024", "Spring 2025", "Summer 2025", "Autumn 2025"]
     
@@ -48,10 +49,11 @@ class Student {
         self.grade = ""
         self.myself = false
         self.isTransfer = false
+        self.semestersCompletedBeforeTransfer = 0
         self.grade = self.calculateGrade()
     }
     
-    init (name: String, profilePicture: UIImage,startingDate: Date2, transferStartingDate: Date, now: Date2, endingDate: Date2){
+    init (name: String, profilePicture: UIImage,startingDate: Date2, transferStartingDate: Date, now: Date2, endingDate: Date2, semestersCompletedBeforeTransfer: Int){
         self.name = name
         self.profilePicture = profilePicture
         self.startingDate = startingDate
@@ -73,6 +75,7 @@ class Student {
         self.grade = ""
         self.myself = false
         self.isTransfer = true
+        self.semestersCompletedBeforeTransfer = semestersCompletedBeforeTransfer
         self.grade = self.calculateGrade()
     }
     
@@ -89,6 +92,7 @@ class Student {
         self.grade = ""
         self.myself = false
         self.isTransfer = false
+        self.semestersCompletedBeforeTransfer = 0
     }
     
     func calculateGrade() -> String{
