@@ -146,7 +146,9 @@ class ViewController: UIViewController {
     }
     
     @objc func updateUI() {
+        
         let startingDate = me?.startingDate
+
         let endingDate = me?.endingDate
         let now = Date2(date: Date())
         name.text = me?.name

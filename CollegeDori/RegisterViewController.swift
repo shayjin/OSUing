@@ -1,7 +1,11 @@
 import UIKit
 
 class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
+    
+    @IBOutlet var transferStart: UIDatePicker!
+    @IBOutlet var isTransferStudent: UISwitch!
+    
     @IBOutlet weak var profilePicture: UIImageView!
     
     @IBOutlet weak var nameField: UITextField!
@@ -41,6 +45,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         for semester in data.semesters {
             pickerData.append(semester.name)
         }
+
+        
         
         if x != nil {
             let startIndex = pickerData.firstIndex(of: x!)
@@ -56,8 +62,30 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         startOptions.tag = 1
         endOptions.tag = 2
+        
+        if let v = me?.isTransfer {
+            if me!.isTransfer {
+                self.isTransferStudent.isOn = true
+                self.startOptions.isHidden = true
+                self.transferStart.isHidden = false
+                self.transferStart.date = me!.transferStartingDate
+            } else {
+                self.isTransferStudent.isOn = false
+                self.startOptions.isHidden = false
+                self.transferStart.isHidden = true
+            }
+        }
     }
-
+    @IBAction func transferButtonPressed(_ sender: UISwitch) {
+        if sender.isOn {
+            self.startOptions.isHidden = true
+            self.transferStart.isHidden = false
+        } else {
+            self.startOptions.isHidden = false
+            self.transferStart.isHidden = true
+        }
+    }
+    
     
     @IBAction func pickProfilePicture(_ sender: Any) {
         let picker = UIImagePickerController()
@@ -80,8 +108,15 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
             if (edit) {
                 if let index = test.index(where: {$0 === me!}) {
+                    
                     var wasMySelf = test[index].myself
-                    me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                    
+                    if self.isTransferStudent.isOn {
+                        me = Student(name: nameField.text!, profilePicture: image!, startingDate: Date2(date: self.transferStart.date), transferStartingDate: self.transferStart.date, now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                        
+                    } else {
+                        me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                    }
                     me?.myself = wasMySelf
                     test[index] = me!
                     vc.me = me!
@@ -91,7 +126,11 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     present(vc, animated: true, completion: nil)
                 }
             } else {
-                me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                if self.isTransferStudent.isOn {
+                    me = Student(name: nameField.text!, profilePicture: image!, startingDate: Date2(date: self.transferStart.date), transferStartingDate: self.transferStart.date, now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                } else {
+                    me = Student(name: nameField.text!, profilePicture: image!, startingDate: convertToStartDate(dataPicked: startDate!), now: Date2(date: Date()), endingDate: convertToEndDate(dataPicked: endDate!))
+                }
                 if test.isEmpty {
                     me?.myself = true
                 }

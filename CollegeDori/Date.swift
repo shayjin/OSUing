@@ -65,6 +65,7 @@ class Date2 {
                 return semester
             }
         }
+        
         if month == 12 || month == 1 {
             return data.years.values[yearIndex][2]
         } else if month == 4 || month == 5 {
@@ -93,6 +94,7 @@ class Date2 {
         
         return y / secondsInDay
     }
+    
 
     
     

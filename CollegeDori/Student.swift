@@ -12,6 +12,7 @@ class Student {
     
     var name: String
     var startingDate: Date2?
+    var transferStartingDate: Date
     var endingDate: Date2?
     var attendedSemesters: [String]
     var attendedSemestersCount: Int
@@ -20,6 +21,7 @@ class Student {
     var grade: String
     var profilePicture: UIImage
     var myself: Bool
+    var isTransfer: Bool
     
     var semesters: [String] = ["Spring 2019", "Summer 2019", "Autumn 2019", "Spring 2020", "Summer 2020", "Autumn 2020", "Spring 2021", "Summer 2021", "Autumn 2021", "Spring 2022", "Summer 2022", "Autumn 2022", "Spring 2023", "Summer 2023", "Autumn 2023", "Spring 2024", "Summer 2024", "Autumn 2024", "Spring 2025", "Summer 2025", "Autumn 2025"]
     
@@ -28,6 +30,7 @@ class Student {
         self.name = name
         self.profilePicture = profilePicture
         self.startingDate = startingDate
+        self.transferStartingDate = Date()
         self.endingDate = endingDate
         var startIndex: Int = semesters.firstIndex(of: self.startingDate!.semester.name)!
         var endIndex: Int = semesters.firstIndex(of: self.endingDate!.semester.name)!
@@ -44,6 +47,32 @@ class Student {
         self.gapSemesters = 0
         self.grade = ""
         self.myself = false
+        self.isTransfer = false
+        self.grade = self.calculateGrade()
+    }
+    
+    init (name: String, profilePicture: UIImage,startingDate: Date2, transferStartingDate: Date, now: Date2, endingDate: Date2){
+        self.name = name
+        self.profilePicture = profilePicture
+        self.startingDate = startingDate
+        self.transferStartingDate = transferStartingDate
+        self.endingDate = endingDate
+        var startIndex: Int = semesters.firstIndex(of: self.startingDate!.semester.name)!
+        var endIndex: Int = semesters.firstIndex(of: self.endingDate!.semester.name)!
+        var nowIndex = semesters.firstIndex(of: now.semester.name)!
+        if nowIndex > startIndex {
+            self.attendedSemesters = Array(semesters[startIndex...nowIndex-1])
+        } else if nowIndex == startIndex {
+            self.attendedSemesters = Array(semesters[startIndex...nowIndex])
+        } else {
+            self.attendedSemesters = []
+        }
+        self.attendedSemestersCount = attendedSemesters.count
+        self.attendingSemesters = Array(semesters[startIndex...endIndex])
+        self.gapSemesters = 0
+        self.grade = ""
+        self.myself = false
+        self.isTransfer = true
         self.grade = self.calculateGrade()
     }
     
@@ -51,6 +80,7 @@ class Student {
         self.name = ""
         self.profilePicture = UIImage(named: "profile")!
         self.startingDate = Date2(date: Date())
+        self.transferStartingDate = Date()
         self.endingDate = Date2(date: Date())
         self.attendedSemesters = []
         self.attendedSemestersCount = 0
@@ -58,6 +88,7 @@ class Student {
         self.gapSemesters = 0
         self.grade = ""
         self.myself = false
+        self.isTransfer = false
     }
     
     func calculateGrade() -> String{
